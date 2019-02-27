@@ -1,0 +1,95 @@
+.anchor {
+  outline: none;
+}
+/* Keyboard-only focus styles */
+.anchor:focus > div {
+  box-shadow: 0 0 2px 2px #51a7e8;
+}
+
+.item {
+  display: grid;
+
+  grid-template-areas:
+    "photo      photo"
+    "name       issues"
+    "publishing .";
+
+  outline: none;
+}
+
+.photo {
+  grid-area: photo;
+
+  cursor: pointer;
+}
+
+.photo img {
+  width: 327px;
+  height: 231px;
+
+  object-fit: cover;
+  object-position: top center;
+
+  background-image: url('/assets/spinner.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transition: box-shadow .3s;
+}
+
+.item .photo img:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+}
+
+.name {
+  margin-top: 10px;
+
+  grid-area: name;
+
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: 0.05em;
+
+  color: #2c467f;
+
+  cursor: pointer;
+}
+
+.publishing {
+  grid-area: publishing;
+
+  font-size: 10px;
+
+  color: #c1c4cc;
+}
+
+.issues {
+  margin-top: auto;
+
+  grid-area: issues;
+
+  font-size: 10px;
+  letter-spacing: 0.05em;
+
+  color: #849acc;
+  text-align: right;
+}
+
+@media (max-width: 1100px) {
+  .photo img {
+    width: 400px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 845px){
+  .photo img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 450px) {
+  .photo img { width: 100%; }
+}

@@ -1,0 +1,37 @@
+.button {
+  width: 385px;
+  height: 45px;
+
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  color: #fff;
+  border: 0;
+  background: #2c467f;
+
+  cursor: pointer;
+  transition: box-shadow .3s;
+}
+
+.button:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  filter: invert(1);
+}
+
+@media (max-width: 400px) {
+  .button {
+    width: 100%;
+  }
+}
