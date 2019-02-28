@@ -6,6 +6,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * HOC
+ */
+import { withCatchEror } from '../../hoc/withCatchEror';
+
+/**
  * Components
  */
 import { Loading } from '../../components';
@@ -20,23 +25,28 @@ import { Comic } from '../../services/api';
  */
 import style from './style.module.css';
 
-export class CardHero extends Component {
+class CardHero extends Component {
   _isMounted = false
 
   getHero = new Comic()
 
   state = {
+    loading: true,
     data: null,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this._isMounted = true;
     const { params: { id } } = this.props;
-    this.getHero.getCharacter(`${id}`).then((data) => {
+    try {
+      const data = await this.getHero.getCharacter(`${id}`);
       if (this._isMounted) {
-        this.setState({ data });
+        this.setState({ data, loading: false });
       }
-    });
+    } catch (e) {
+      /* NOTE: Specially cause an error in render to catch the error in hoc */
+      this.setState({ data: null, loading: false });
+    }
   }
 
   componentWillUnmount() {
@@ -44,9 +54,9 @@ export class CardHero extends Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, loading } = this.state;
 
-    if (!data) return <Loading />;
+    if (loading) return <Loading />;
 
     const {
       image,
@@ -85,3 +95,5 @@ CardHero.propTypes = {
     id: PropTypes.string.isRequired,
   }).isRequired,
 };
+
+export default withCatchEror(CardHero);

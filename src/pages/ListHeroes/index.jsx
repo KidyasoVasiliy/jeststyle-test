@@ -6,6 +6,11 @@ import React, { Component } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
 /**
+ * HOC
+ */
+import { withCatchEror } from '../../hoc/withCatchEror';
+
+/**
  * Components
  */
 import { Item, Button, Loading } from '../../components';
@@ -20,43 +25,50 @@ import { Comic } from '../../services/api';
  */
 import style from './style.module.css';
 
-export class ListHeroes extends Component {
+class ListHeroes extends Component {
   _isMounted = false;
 
   getHeroes = new Comic();
 
   state = {
-    items: [],
-    loading: false,
+    items: null,
+    loading: true,
+    loadingBtn: false,
   };
 
-  componentDidMount = () => {
+  async componentDidMount() {
     this._isMounted = true;
-    this.getHeroes.getCharacters().then((items) => {
+
+    try {
+      const items = await this.getHeroes.getCharacters();
       if (this._isMounted) {
-        this.setState({ items });
+        this.setState({ items, loading: false });
       }
-    });
-  };
+    } catch (e) {
+      /* NOTE: Specially cause an error in render to catch the error in hoc */
+      this.setState({ items: null, loading: false });
+    }
+  }
+
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
   showMore = () => {
-    this.setState(() => ({ loading: true }));
+    this.setState(() => ({ loadingBtn: true }));
     this.getHeroes.getMoreCharacters().then((newItems) => {
       const { items } = this.state;
       const current = [...items].concat(newItems);
-      this.setState({ items: current, loading: false });
+      this.setState({ items: current, loadingBtn: false });
     });
   };
 
   render() {
-    const { items, loading } = this.state;
+    const { items, loading, loadingBtn } = this.state;
     const { history } = this.props;
 
-    if (!items.length) return <Loading />;
+    if (loading) return <Loading />;
 
     return (
       <main className={style.container}>
@@ -72,7 +84,7 @@ export class ListHeroes extends Component {
         <div className={style.controll}>
           <Button
             onClick={this.showMore}
-            disabled={loading}
+            disabled={loadingBtn}
           />
         </div>
       </main>
@@ -83,3 +95,5 @@ export class ListHeroes extends Component {
 ListHeroes.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
 };
+
+export default withCatchEror(ListHeroes);
