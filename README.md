@@ -38,7 +38,16 @@ Request to the server will only work when running the project on HTTPS
     $ yarn start:https
 ```
 
-
+###  Build project
+When familiarized with the source code, you can do ` yarn build ` and run a static server on your machine.
+To make it work you install:
+```sh
+  $ npm install -g serve
+```
+Next, just run the command:
+```sh
+    $ yarn server:build
+```
 ---
 ___
 Completed the task of Kidyasov Vasiliy
