@@ -9,9 +9,12 @@ import { Link } from 'react-router-dom';
  */
 import style from './style.module.css';
 
+/**
+ * Component Header is shared for ListPage and CardPage
+ */
 export const Header = () => (
   <header className={style.header}>
-    <div className="container">
+    <div className={style.container}>
       <Link
         to="/"
         role="link"

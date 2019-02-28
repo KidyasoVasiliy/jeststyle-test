@@ -97,22 +97,22 @@ export class Comic {
       {
         id: 1,
         title: 'Real name:',
-        current: realName,
+        current: realName || 'not known',
       },
       {
         id: 2,
         title: 'Publisher:',
-        current: publisher,
+        current: publisher || 'not known',
       },
       {
         id: 3,
         title: 'Gender:',
-        current: gender,
+        current: gender || 'not known',
       },
       {
         id: 4,
         title: 'Updated:',
-        current: `${slugsMonth[month]} ${date}, ${year}`,
+        current: `${slugsMonth[month]} ${date}, ${year}` || 'not known',
       },
     ];
 

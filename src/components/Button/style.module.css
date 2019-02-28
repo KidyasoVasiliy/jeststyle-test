@@ -20,16 +20,6 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
 }
 
-.spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image {
-  filter: invert(1);
-}
-
 @media (max-width: 400px) {
   .button {
     width: 100%;

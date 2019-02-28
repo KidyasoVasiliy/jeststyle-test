@@ -9,6 +9,14 @@ import PropTypes from 'prop-types';
  */
 import style from './style.module.css';
 
+/**
+ * The component Item responsible for rendering data
+ * @param {function} goToCard
+ * @param {string} name
+ * @param {string} image
+ * @param {string} publisher
+ * @param {number|string} issue
+ */
 export const Item = ({
   goToCard,
   name,

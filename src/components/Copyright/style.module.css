@@ -1,0 +1,16 @@
+.copyright {
+  position: fixed;
+  right: 201px;
+  bottom: 20px;
+
+  font-size: 10px;
+  letter-spacing: 0.05em;
+
+  color: #C1C4CC;
+}
+
+@media (max-width: 1100px) {
+  .copyright {
+    right: 41px;
+  }
+}

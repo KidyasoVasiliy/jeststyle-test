@@ -3,3 +3,4 @@ export * from './Header';
 export * from './Button';
 export * from './Error';
 export * from './Loading';
+export * from './Copyright';

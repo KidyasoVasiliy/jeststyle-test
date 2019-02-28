@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  * Vendor
  */
@@ -20,15 +21,26 @@ import { Comic } from '../../services/api';
 import style from './style.module.css';
 
 export class CardHero extends Component {
-  getHero = new Comic();
+  _isMounted = false
+
+  getHero = new Comic()
 
   state = {
     data: null,
-  };
+  }
 
   componentDidMount() {
+    this._isMounted = true;
     const { params: { id } } = this.props;
-    this.getHero.getCharacter(`${id}`).then(data => this.setState({ data }));
+    this.getHero.getCharacter(`${id}`).then((data) => {
+      if (this._isMounted) {
+        this.setState({ data });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -48,20 +60,20 @@ export class CardHero extends Component {
         <img className={style.image} src={image} alt={name} />
 
         <div className={style.fields}>
-          <h1 className={style.title}>{name || 'not known'}</h1>
+          <h1 className={style.title}>{name}</h1>
           <table>
             <tbody>
 
               {fields.map(({ id, title, current }) => (
                 <tr key={id}>
                   <td className={style.label}>{title}</td>
-                  <td className={style.current}>{current || 'not known'}</td>
+                  <td className={style.current}>{current}</td>
                 </tr>
               ))}
 
             </tbody>
           </table>
-          <p className={style.description}>{description || 'not known'}</p>
+          <p className={style.description}>{description}</p>
         </div>
       </main>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  * Vendor
  */
@@ -20,6 +21,8 @@ import { Comic } from '../../services/api';
 import style from './style.module.css';
 
 export class ListHeroes extends Component {
+  _isMounted = false;
+
   getHeroes = new Comic();
 
   state = {
@@ -28,8 +31,17 @@ export class ListHeroes extends Component {
   };
 
   componentDidMount = () => {
-    this.getHeroes.getCharacters().then(items => this.setState({ items }));
+    this._isMounted = true;
+    this.getHeroes.getCharacters().then((items) => {
+      if (this._isMounted) {
+        this.setState({ items });
+      }
+    });
   };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   showMore = () => {
     this.setState(() => ({ loading: true }));
@@ -40,14 +52,6 @@ export class ListHeroes extends Component {
     });
   };
 
-  // TODO:
-  /*
-    Can't perform a React state update on an unmounted component.
-    This is a no-op, but it indicates a memory leak in your application.
-    To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
-      in ListHeroes (created by Route)
-  */
-
   render() {
     const { items, loading } = this.state;
     const { history } = this.props;
@@ -55,7 +59,7 @@ export class ListHeroes extends Component {
     if (!items.length) return <Loading />;
 
     return (
-      <main className="container">
+      <main className={style.container}>
         <div className={style.grid}>
           {items.map(({ id, characterId, ...otherProps }) => {
             const goToCard = () => {
